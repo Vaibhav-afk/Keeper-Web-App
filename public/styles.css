@@ -3,15 +3,15 @@
   margin: 0;
   box-sizing: border-box;
 }
+
 html {
   font-family: "Montserrat", sans-serif;
 }
+
 body {
   background: #eee;
-  background-color: #fafa7f;
   background-color: #ffffff;
   background-image: url("https://www.transparenttextures.com/patterns/dark-geometric.png");
-  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
   padding: 0 16px;
 }
 
@@ -39,6 +39,7 @@ footer {
 footer p {
   color: #ccc;
 }
+
 .note {
   background: #fff;
   border-radius: 7px;
@@ -47,11 +48,14 @@ footer p {
   width: 240px;
   margin: 16px;
   float: left;
+  z-index: 0;
 }
+
 .note h1 {
   font-size: 1.1em;
   margin-bottom: 6px;
 }
+
 .note p {
   font-size: 1.1em;
   margin-bottom: 10px;
@@ -59,14 +63,21 @@ footer p {
   word-wrap: break-word;
 }
 
-.note button {
+.edit-button {
+  z-index: 0;
   position: relative;
   float: right;
-  margin-right: 10px;
+  margin-right: 5px;
+  color: #413F42;
+  cursor: pointer;
+}
+
+.delete-button {
+  z-index: 0;
+  position: relative;
+  float: right;
   color: #f5ba13;
   border: none;
-  width: 36px;
-  height: 36px;
   cursor: pointer;
   outline: none;
 }
@@ -80,8 +91,11 @@ form.create-note {
   border-radius: 7px;
   box-shadow: 0 1px 5px rgb(138, 137, 137);
 }
+
 form.create-note input,
-form.create-note textarea {
+form.create-note textarea,
+.EditForm textarea,
+.EditForm input {
   width: 100%;
   border: none;
   padding: 4px;
@@ -90,6 +104,7 @@ form.create-note textarea {
   font-family: inherit;
   resize: none;
 }
+
 form.create-note button {
   position: absolute;
   right: 18px;
@@ -103,4 +118,180 @@ form.create-note button {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   outline: none;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────────── */
+
+/* Edit Modal Styling*/
+
+/* ──────────────────────────────────────────────────────────────────────────────── */
+
+.EditDarkBG {
+  background-color: rgba(0, 0, 0, 0.36);
+  transform: translate(-50%, -50%);
+  position: fixed;
+  width: 100vw;
+  height: 100%;
+  left: 49.47%;
+  z-index: 0;
+  top: 50%;
+}
+
+.EditCentered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.EditModal {
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+  background: white;
+  border-radius: 16px;
+  color: white;
+  height: 175px;
+  width: 600px;
+  z-index: 10;
+}
+
+.EditModalHeader {
+  height: 30px;
+  background: white;
+  overflow: hidden;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  z-index: 10;
+}
+
+.EditHeading {
+  font-family: "Segoe UI";
+  margin: 0;
+  padding: 5px;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 20px;
+  text-align: center;
+  z-index: 10;
+}
+
+.EditBtn {
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.03);
+  background: white;
+  margin: 12px;
+  position: absolute;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: #F5BA13;
+  right: 65px;
+  bottom: 5px;
+  z-index: 10;
+}
+
+.EditCloseBtn {
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.03);
+  background: white;
+  margin: 12px;
+  position: absolute;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #413F42;
+  right: 10px;
+  bottom: 5px;
+  z-index: 10;
+}
+
+.EditCloseBtn:hover,
+.EditBtn:hover {
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+  transform: translate(-1.5px, 1.5px);
+}
+
+.EditModalUsersContainer {
+  overflow-y: auto;
+  height: fit-content;
+  text-align: center;
+  padding: 6px 14px;
+  color: #2c3e50;
+  font-size: 14px;
+  z-index: 10;
+}
+
+.EditForm {
+  height: fit-content;
+  padding: 8px;
+  position: relative;
+  background: #fff;
+  z-index: 10;
+}
+
+
+/* ──────────────────────────────────────────────────────────────────────────────── */
+
+/* Media Queries */
+
+/* ──────────────────────────────────────────────────────────────────────────────── */
+
+
+@media screen and (max-width: 590px) {
+  .EditModal {
+    height: 170px;
+    width: 355px;
+  }
+
+  .EditHeading {
+    font-size: 17px;
+  }
+
+  form.create-note {
+    width: 430px;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  header h1 {
+    font-size: 29px;
+  }
+
+  .EditModal {
+    height: 170px;
+    width: 335px;
+  }
+
+  .EditHeading {
+    font-size: 16.5px;
+  }
+
+  form.create-note {
+    width: 350px;
+  }
+
+}
+
+@media screen and (max-width: 410px) {
+
+  header h1 {
+    font-size: 26px;
+  }
+
+  .EditModal {
+    height: 170px;
+    width: 255px;
+  }
+
+  .EditHeading {
+    font-size: 16px;
+    position: absolute;
+    left: 10px;
+  }
+
+  form.create-note {
+    width: 260px;
+  }
 }

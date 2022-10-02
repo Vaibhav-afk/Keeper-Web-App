@@ -1,51 +1,63 @@
 import React, { useState } from "react";
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
-import Zoom from '@material-ui/core/Zoom';
+import AddIcon from "@material-ui/icons/Add";
+import Fab from "@material-ui/core/Fab";
+import Zoom from "@material-ui/core/Zoom";
 
-function CreateArea(props) {
+import { db } from "./firebase-config";
+import { collection, doc, addDoc } from "firebase/firestore";
+import { useAlert } from "react-alert";
 
+function CreateArea() {
   const [isExpanded, setExpanded] = useState(false);
+  const alert = useAlert();
 
   const [note, setNote] = useState({
     title: "",
-    content: ""
+    content: "",
   });
 
   function handleChange(event) {
     const { name, value } = event.target;
 
-    setNote(prevNote => {
+    setNote((prevNote) => {
       return {
         ...prevNote,
-        [name]: value
+        [name]: value,
       };
     });
   }
 
-  function submitNote(event) {
-    props.onAdd(note);
+  const notesCollection = collection(db, "notes");
+
+  async function submitNote(event) {
+    await addDoc(notesCollection, { title: note.title, content: note.content });
+    alert.show("Note created successfully!");
+
+    //Clearing the notes after it gets uploaded to db.
     setNote({
       title: "",
-      content: ""
+      content: "",
     });
+
     event.preventDefault();
   }
 
-  function expand(){
+  function expand() {
     setExpanded(true);
   }
 
   return (
     <div>
       <form className="create-note">
-        {isExpanded ? <input
-          name="title"
-          onChange={handleChange}
-          value={note.title}
-          placeholder="Title"
-        /> : null}
-        
+        {isExpanded ? (
+          <input
+            name="title"
+            onChange={handleChange}
+            value={note.title}
+            placeholder="Title"
+          />
+        ) : null}
+
         <textarea
           name="content"
           onClick={expand}
@@ -55,8 +67,9 @@ function CreateArea(props) {
           rows={isExpanded ? 3 : 1}
         />
         <Zoom in={true}>
-        <Fab onClick={submitNote}><AddIcon/>
-        </Fab>
+          <Fab onClick={submitNote}>
+            <AddIcon />
+          </Fab>
         </Zoom>
       </form>
     </div>

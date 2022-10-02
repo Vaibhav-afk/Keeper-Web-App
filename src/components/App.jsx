@@ -1,36 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
 import CreateArea from "./CreateArea";
 
+import { db } from "./firebase-config";
+import { collection, doc, getDocs, deleteDoc } from "firebase/firestore";
+import { useAlert } from "react-alert";
+
 function App() {
+  const [notes, setNotes] = useState([]);
+  const notesCollection = collection(db, "notes");
+  const alert = useAlert();
 
-  const [notes,setNotes]=useState([]);
+  useEffect(() => {
+    const fetchNotes = async () => {
+      const note = await getDocs(notesCollection);
+      const data = note.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      setNotes(data);
+    };
 
+    fetchNotes();
+  }, [notes]);
 
-function addNote(newNote){
-  setNotes(prevNotes => {
-    return [...prevNotes, newNote];
-  })
-}
-
-function deleteNote(id){
-  setNotes(prevNotes => {
-    return prevNotes.filter((noteItem,index) => {
-      return index !==id;
-    })
-  })
-}
+  async function deleteNote(id) {
+    const noteDoc = doc(db, "notes", id);
+    await deleteDoc(noteDoc);
+    alert.show("Deleted successfully!!");
+  }
 
   return (
     <div>
       <Header />
-      <CreateArea onAdd={addNote} />
-      {notes.map((noteItem,index) => {
-        return (<Note key={index} id={index} title={noteItem.title} content={noteItem.content} onDelete={deleteNote}/>);
-      })
-      }
+      <CreateArea />
+      {notes.map((noteItem, index) => {
+        return (
+          <div key={index}>
+            <Note
+              id={noteItem.id}
+              title={noteItem.title}
+              content={noteItem.content}
+              onDelete={deleteNote}
+            />
+          </div>
+        );
+      })}
       <Footer />
     </div>
   );
