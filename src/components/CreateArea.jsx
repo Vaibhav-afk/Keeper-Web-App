@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import AddIcon from "@material-ui/icons/Add";
-import Fab from "@material-ui/core/Fab";
-import Zoom from "@material-ui/core/Zoom";
+
+import AddIcon from "@mui/icons-material/Add";
+import Fab from "@mui/material/Fab";
+import Zoom from "@mui/material/Zoom";
 
 import { db } from "./firebase-config";
 import { collection, doc, addDoc } from "firebase/firestore";
@@ -57,7 +58,7 @@ function CreateArea() {
             placeholder="Title"
           />
         ) : null}
-
+        <Fab />
         <textarea
           name="content"
           onClick={expand}
