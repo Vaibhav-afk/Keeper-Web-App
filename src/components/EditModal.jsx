@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { db } from "./firebase-config";
+import { db } from "./firebase-config.js";
 import { doc, updateDoc } from "firebase/firestore";
 import { useAlert } from "react-alert";
 

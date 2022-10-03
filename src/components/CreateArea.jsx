@@ -4,7 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 import Zoom from "@mui/material/Zoom";
 
-import { db } from "./firebase-config";
+import { db } from "./firebase-config.js";
 import { collection, addDoc } from "firebase/firestore";
 import { useAlert } from "react-alert";
 
