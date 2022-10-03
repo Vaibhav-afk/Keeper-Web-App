@@ -10,10 +10,11 @@ import { useAlert } from "react-alert";
 
 function App() {
   const [notes, setNotes] = useState([]);
-  const notesCollection = collection(db, "notes");
   const alert = useAlert();
 
   useEffect(() => {
+    const notesCollection = collection(db, "notes");
+
     const fetchNotes = async () => {
       const note = await getDocs(notesCollection);
       const data = note.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
