@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import Note from "./Note";
-import CreateArea from "./CreateArea";
+import Header from "./Header.jsx";
+import Footer from "./Footer.jsx";
+import Note from "./Note.jsx";
+import CreateArea from "./CreateArea.jsx";
 
 import { db } from "./firebase-config";
 import { collection, doc, getDocs, deleteDoc } from "firebase/firestore";

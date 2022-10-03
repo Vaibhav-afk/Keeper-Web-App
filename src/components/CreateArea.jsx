@@ -5,7 +5,7 @@ import Fab from "@mui/material/Fab";
 import Zoom from "@mui/material/Zoom";
 
 import { db } from "./firebase-config";
-import { collection, doc, addDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { useAlert } from "react-alert";
 
 function CreateArea() {

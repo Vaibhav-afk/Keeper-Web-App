@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./components/App";
+import App from "./components/App.jsx";
 
 import { types } from "react-alert";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";

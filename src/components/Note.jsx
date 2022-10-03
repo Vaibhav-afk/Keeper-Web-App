@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import EditModal from "./EditModal";
+import EditModal from "./EditModal.jsx";
 
 function Note(props) {
   const [isOpen, setIsOpen] = useState(false);
